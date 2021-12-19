@@ -84,6 +84,7 @@ button {
   flex-direction: column;
   color: #fff;
   padding: 0 3rem 1rem 3rem;
+  position: relative;
 }
 
 #details-container td {
@@ -149,7 +150,19 @@ button {
 }
 
 @media screen and (max-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+  
   #people-container {
     grid-template-columns: 1fr;
+  }
+
+  .glass {
+    backdrop-filter: none;
+  }
+
+  #details-container {
+    padding: 0 2rem 1rem 2rem;
   }
 }
