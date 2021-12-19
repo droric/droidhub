@@ -24,4 +24,4 @@ jobs:
           app-name: 'droidhub'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_E67A34B00E704586A99DC73945E87C90 }}
-          package: .
+          package: *
