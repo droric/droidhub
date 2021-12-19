@@ -45,18 +45,25 @@
     app.pageVars.contentContainer.style.display = 'none';
     const uid = parseInt(e.target.id);
     const details = await getDetails('people', uid);
-    getDetailsHtml(details);
+    createDetailsHtml(details, personProperties);
 
     app.pageVars.loadingModal.style.display = 'none';
     app.pageVars.contentContainer.style.display = 'none';
     app.pageVars.detailsContainer.style.display = 'flex';
-    setTimeout(() => {
-      app.pageVars.detailsContainer.parentElement.addEventListener('click', hideDetails);
-    }, 50);
+    app.pageVars.detailsContainer.parentElement.addEventListener('click', hideDetails);
   }
 
-  function getDetailsHtml(details) {
+  function createDetailsHtml(details, properties) {
     const fragment = document.createDocumentFragment();
+    
+    const closeBtn = document.createElement('img');
+    closeBtn.src = '/img/close-icon.png';
+    closeBtn.alt = 'Close Dialog Button';
+    closeBtn.width = '32';
+    closeBtn.height = '32';
+    closeBtn.classList.add('btn-close');
+    closeBtn.addEventListener('click', hideDetails);
+    fragment.appendChild(closeBtn);
 
     const h2 = document.createElement('h2');
     h2.innerText = details.properties.name;
@@ -65,8 +72,6 @@
 
     const table = document.createElement('table');
     const tbody = document.createElement('tbody');
-
-    const properties = personProperties;
 
     for (const prop in properties) {
       console.log(prop);
@@ -95,10 +100,12 @@
     app.pageVars.contentContainer.style.display = 'flex';
   }
 
-  function hideDetails() {
-    app.pageVars.detailsContainer.style.display = 'none';
-    app.pageVars.contentContainer.style.display = 'flex';
-    app.pageVars.detailsContainer.parentElement.removeEventListener('click', hideDetails);
+  function hideDetails(e) {
+    if (e.target.nodeName === 'MAIN' || e.target.nodeName === 'IMG') {
+      app.pageVars.detailsContainer.style.display = 'none';
+      app.pageVars.contentContainer.style.display = 'flex';
+      app.pageVars.detailsContainer.parentElement.removeEventListener('click', hideDetails);
+    }
   }
 
   function setupButtons() {
