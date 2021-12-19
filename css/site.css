@@ -12,6 +12,7 @@
 
 html {
   font-family: 'Arvo', serif;
+  font-size: 20px;
 }
 
 body {
@@ -39,7 +40,6 @@ footer {
   text-align: center;
   color: #fff;
   padding: .3rem;
-  margin: 2rem 0 0 0;
 }
 
 main {
@@ -83,7 +83,7 @@ button {
   display: none;
   flex-direction: column;
   color: #fff;
-  padding: 0 3rem 3rem 3rem;
+  padding: 0 3rem 1rem 3rem;
 }
 
 #details-container td {
@@ -130,8 +130,9 @@ button {
   justify-content: center;
   align-items: center;
   text-align: center;
-  line-height: 3vw;
-  font-size: 2vw;
+  min-height: 200px;
+  font-size: 2rem;
+  line-height: 3rem;
 }
 
 .glass {
@@ -150,9 +151,5 @@ button {
 @media screen and (max-width: 768px) {
   #people-container {
     grid-template-columns: 1fr;
-  }
-
-  .person-card {
-    min-height: 200px;
   }
 }
