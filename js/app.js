@@ -1,10 +1,21 @@
 (function (app) {
   const apiBaseUrl = 'https://www.swapi.tech/api/'
+  const personProperties = {
+    name: ["Name",""],
+    gender: ["Gender",""],
+    hair_color: ["Hair Color",""],
+    eye_color: ["Eye Color",""],
+    skin_color: ["Skin Color",""],
+    height: ["Height","cm"],
+    mass: ["Weight","kg"],
+    birth_year: ["Birth Year",""]
+  };
   app.pageVars = {}
   app.peopleStart = async function() {
     app.pageVars.params = new URLSearchParams(document.location.search);
     app.pageVars.loadingModal = document.getElementById('loadingModal');
     app.pageVars.contentContainer = document.getElementById('content-container');
+    app.pageVars.detailsContainer = document.getElementById('details-container');
 
     const personCard = document.querySelectorAll('.person-card');
 
@@ -34,11 +45,60 @@
     app.pageVars.contentContainer.style.display = 'none';
     const uid = parseInt(e.target.id);
     const details = await getDetails('people', uid);
+    getDetailsHtml(details);
+
+    app.pageVars.loadingModal.style.display = 'none';
+    app.pageVars.contentContainer.style.display = 'none';
+    app.pageVars.detailsContainer.style.display = 'flex';
+    setTimeout(() => {
+      app.pageVars.detailsContainer.parentElement.addEventListener('click', hideDetails);
+    }, 50);
+  }
+
+  function getDetailsHtml(details) {
+    const fragment = document.createDocumentFragment();
+
+    const h2 = document.createElement('h2');
+    h2.innerText = details.properties.name;
+    h2.classList.add('details-name');
+    fragment.appendChild(h2);
+
+    const table = document.createElement('table');
+    const tbody = document.createElement('tbody');
+
+    const properties = personProperties;
+
+    for (const prop in properties) {
+      console.log(prop);
+      console.log(properties[prop][0])
+
+      const tr = document.createElement('tr');
+      const tdLabel = document.createElement('td');
+      tdLabel.classList.add('label');
+      tdLabel.innerText = properties[prop][0];
+      tr.appendChild(tdLabel);
+
+      const tdData = document.createElement('td');
+      tdData.innerText = `${details.properties[prop]} ${properties[prop][1]}`
+      tr.appendChild(tdData);
+      tbody.appendChild(tr);
+    }
+
+    table.appendChild(tbody);
+    fragment.appendChild(table);
+    app.pageVars.detailsContainer.innerHTML = '';
+    app.pageVars.detailsContainer.appendChild(fragment);
   }
 
   function hideLoader() {
     app.pageVars.loadingModal.style.display = 'none';
     app.pageVars.contentContainer.style.display = 'flex';
+  }
+
+  function hideDetails() {
+    app.pageVars.detailsContainer.style.display = 'none';
+    app.pageVars.contentContainer.style.display = 'flex';
+    app.pageVars.detailsContainer.parentElement.removeEventListener('click', hideDetails);
   }
 
   function setupButtons() {
