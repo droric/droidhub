@@ -7,6 +7,7 @@
 
 :root {
   --trans-bg: rgba(255, 255, 255, 0.123);
+  --trans-bg-active: rgba(255, 255, 255, 0.212);
   --sw-yellow: #fbea04;
 }
 
@@ -141,6 +142,12 @@ button {
   -webkit-backdrop-filter: blur(2px);
   backdrop-filter: blur(2px);
   box-shadow: 0 0 .2rem .2rem rgba(216, 216, 216, 0.082);
+}
+
+.glass.button:hover {
+  background-color: var(--trans-bg-active);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
 }
 
 @media screen and (max-width: 992px) {
